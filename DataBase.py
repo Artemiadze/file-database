@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import openpyxl
+from tkinter import messagebox
 
 
 def create_empty_excel(columns: list, filename: str, sheet_name: str = 'Sheet1'):
@@ -84,11 +85,13 @@ def print_database():
 
     DB = openpyxl.load_workbook('Databases/student.xlsx')
     sheet = DB['Sheet1']
+    print_to_console = ""
     for row in sheet.rows:
         string = ''
         for cell in row:
             string = string + str(cell.value) + ' '
-        print(string)
+        print_to_console = print_to_console + "\n" + string
+    messagebox.showinfo('Таблица', print_to_console)
     DB.save('Databases/student.xlsx')
 
 
@@ -102,11 +105,13 @@ def print_backup():
     """Печать всей БД"""
     DB = openpyxl.load_workbook('Databases/backup.xlsx')
     sheet = DB['Sheet1']
+    print_to_console = ""
     for row in sheet.rows:
         string = ''
         for cell in row:
             string = string + str(cell.value) + ' '
-        print(string)
+        print_to_console = print_to_console + "\n" + string
+    messagebox.showinfo('Таблица', print_to_console)
     DB.save('Databases/student.xlsx')
 
 

@@ -9,8 +9,10 @@ def commit_commands():
     console = command.split()
     # Проверка на комманду
     if console[0].upper() == 'CREATE' and console[1].upper() == 'TABLE':
+        messagebox.showinfo('Создание', f"База данных {console[2]}.xlsx создана")
         create_empty_excel(columns=['ID', 'Name', 'Email', 'Group'], filename=f'{console[2]}.xlsx')
     if console[0].upper() == 'CREATE' and console[1].upper() == 'BACKUP':
+        messagebox.showinfo('Создание', f"База данных {console[2]}.xlsx создана")
         create_backup()
     elif console[0].upper() == 'INSERT':
         if len(console) == 6:
@@ -18,12 +20,15 @@ def commit_commands():
         else:
             dataList = [int(console[1]), console[2], console[3], console[4]]  # На случай, если вместо ФИ будет только Ф
         insert_excel(dataList)
+        messagebox.showinfo("Добавление", "Ваши данные добавлены")
     elif console[0].upper() == 'DELETE':
-        delete_rows(console[1])  # 1 - это строка с названиями
+        messagebox.showinfo("Удаление", f"Данные из строки {console[1] + 1} удалены")
+        delete_rows(console[1] + 1)  # 1 - это строка с названиями(+1 - чтобы не удалили случайно строку с )
     elif console[0].upper() == 'CLEAR':
         clean_database()
+        messagebox.showinfo("Очистка", "База данных очищена")
     elif console[0].upper() == 'PRINT':
-        if console[1].upper() == "student":
+        if console[1] == "student":
             print_database()
             print_excel()
         else:
@@ -32,8 +37,6 @@ def commit_commands():
         # печать строки по ключу
         get_data_to_ecxel(console[1]) if len(console) == 2 else get_data_to_ecxel(console[1], console[2])
         # иначе печать элемента из всей строки по ключу
-    else:
-        print("Artyom!")
 
 
 if __name__ == '__main__':
