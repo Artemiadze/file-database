@@ -11,8 +11,8 @@ def commit_commands():
     if console[0].upper() == 'CREATE' and console[1].upper() == 'TABLE':
         messagebox.showinfo('Создание', f"База данных {console[2]}.xlsx создана")
         create_empty_excel(columns=['ID', 'Name', 'Email', 'Group'], filename=f'{console[2]}.xlsx')
-    if console[0].upper() == 'CREATE' and console[1].upper() == 'BACKUP':
-        messagebox.showinfo('Создание', f"База данных {console[2]}.xlsx создана")
+    elif console[0].upper() == 'CREATE' and console[1].upper() != 'TABLE':
+        messagebox.showinfo('Создание', "Backup-файл базы данных создан")
         create_backup()
     elif console[0].upper() == 'INSERT':
         if len(console) == 6:
@@ -30,7 +30,6 @@ def commit_commands():
     elif console[0].upper() == 'PRINT':
         if console[1] == "student":
             print_database()
-            print_excel()
         else:
             print_backup()
     elif console[0].upper() == 'SELECT':
