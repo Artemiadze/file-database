@@ -26,7 +26,9 @@ if __name__ == '__main__':
     if console[0].upper() == 'CREATE' and console[1].upper() == 'BACKUP':
         create_backup()
     elif console[0].upper() == 'INSERT':
-        dataList = [int(console[1]), console[2] + " " + console[3], console[4], console[5]] if len(console) == 6 else \
+        if len(console) == 6:
+            dataList = [int(console[1]), console[2] + " " + console[3], console[4], console[5]]
+        else:
             dataList = [int(console[1]), console[2], console[3], console[4]] # На случай, если вместо ФИ будет только Ф
         insert_excel(dataList)
     elif console[0].upper() == 'DELETE':
@@ -34,8 +36,11 @@ if __name__ == '__main__':
     elif console[0].upper() == 'CLEAR':
         clean_database()
     elif console[0].upper() == 'PRINT':
-        print_database()
-        print_excel() if console[1].upper() == "student" else print_backup()
+        if console[1] == 'student':
+            print_database()
+            print_excel()  # cтоит убрать
+        else:
+            print_backup()
     elif console[0].upper() == 'SELECT':
         # печать строки по ключу
         get_data_to_ecxel(console[1]) if len(console) == 2 else get_data_to_ecxel(console[1], console[2])
