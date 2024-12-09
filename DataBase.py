@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import openpyxl
+from tkinter import messagebox
 
 
 def create_empty_excel(columns: list, filename: str, sheet_name: str = 'Sheet1'):
@@ -37,14 +38,18 @@ def get_data_to_ecxel(parametr, colomn ="nothing"):
     """ Функция выводит данные из словаря, по ключу, сам словарь создан в функции parse_excel_to_dict_list"""
 
     info = parse_excel_to_dict_list('Databases/student.xlsx')
-
+    print_GUI = ""
     # Заголовок для вывода только нужного элемента, где строка с совпавшим ключом
     if colomn != "nothing":
-        print(colomn.upper())
+        print_GUI = colomn.upper()
 
     for i in info:
         if parametr in i.values():
-            print(i if colomn == "nothing" else i[colomn])
+            if colomn == "nothing":
+                print_GUI = print_GUI + "\n" + str(i)
+            else:
+                print_GUI = print_GUI + "\n" + str(i[colomn])
+    messagebox.showinfo('Извлечение', print_GUI)
 
 
 def insert_excel(information):
@@ -84,29 +89,27 @@ def print_database():
 
     DB = openpyxl.load_workbook('Databases/student.xlsx')
     sheet = DB['Sheet1']
+    print_to_console = ""
     for row in sheet.rows:
         string = ''
         for cell in row:
             string = string + str(cell.value) + ' '
-        print(string)
+        print_to_console = print_to_console + "\n" + string
+    messagebox.showinfo('Таблица', print_to_console)
     DB.save('Databases/student.xlsx')
-
-
-def print_excel():
-    """Печать всей БД"""
-    df_orders = pd.read_excel('Databases/student.xlsx')
-    print(df_orders.head())
 
 
 def print_backup():
     """Печать всей БД"""
     DB = openpyxl.load_workbook('Databases/backup.xlsx')
     sheet = DB['Sheet1']
+    print_to_console = ""
     for row in sheet.rows:
         string = ''
         for cell in row:
             string = string + str(cell.value) + ' '
-        print(string)
+        print_to_console = print_to_console + "\n" + string
+    messagebox.showinfo('Таблица', print_to_console)
     DB.save('Databases/student.xlsx')
 
 
