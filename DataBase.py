@@ -19,11 +19,9 @@ def create_empty_excel(columns: list, filename: str, sheet_name: str = 'Sheet1')
     df.to_excel(excel_writer, index=False, sheet_name=sheet_name, freeze_panes=(1, 0))
     excel_writer._save()  # Сохранения изменений в файле Excel
 
-    # return filepath
-
 
 def parse_excel_to_dict_list(filepath: str, sheet_name='Sheet1'):
-    """Запись данных из таблицы в словари для вывода данных на экран"""
+    """Запись данных из таблицы в словари для вывода данных на экран или поиска данных"""
 
     # Загружаем Excel файл в DataFrame
     df = pd.read_excel(filepath, sheet_name=sheet_name)
@@ -46,7 +44,8 @@ def get_data_to_ecxel(parametr, colomn ="nothing"):
     for i in info:
         if parametr in i.values():
             if colomn == "nothing":
-                print_GUI = print_GUI + "\n" + str(i)
+                print_GUI = (print_GUI + "\n" + str(i["ID"]) + " " + str(i["Name"]) + " " +
+                             str(i['Email']) + " " + str(i['Group']))
             else:
                 print_GUI = print_GUI + "\n" + str(i[colomn])
     messagebox.showinfo('Извлечение', print_GUI)
@@ -57,13 +56,19 @@ def insert_excel(information):
     DB = openpyxl.load_workbook('Databases/student.xlsx')
     sheet = DB['Sheet1']
 
+    # Проверка на отрицательность ключевого поля
+    if information[0] < 0:
+        messagebox.showinfo("Ошибка", "Значение ключевого поля не может быть отрицательным!")
+        return
     info = parse_excel_to_dict_list('Databases/student.xlsx')
     flag = 0
     for i in info:
+        # Проверка на наличие ID в БД
         if information[0] in i.values():
-            print("There is already a field with such a key value!")
+            messagebox.showinfo("Ошибка", "Уже существует такая запись с таким же ключом")
             flag = 1
     if flag == 0:
+        messagebox.showinfo("Добавление", "Ваши данные добавлены")
         sheet.append(information)
     DB.save('Databases/student.xlsx')
 
@@ -82,6 +87,16 @@ def clean_database():
     sheet = DB['Sheet1']
     sheet.delete_rows(2, sheet.max_row - 1)
     DB.save('Databases/student.xlsx')
+
+
+def remove_database():
+    """ Полное удаление БД из системы"""
+    os.remove('Databases/student.xlsx')
+
+
+def remove_backup():
+    """Полное удаление backup-файла из системы"""
+    os.remove('Databases/backup.xlsx')
 
 
 def print_database():

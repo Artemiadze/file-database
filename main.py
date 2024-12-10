@@ -20,10 +20,16 @@ def commit_commands():
         else:
             dataList = [int(console[1]), console[2], console[3], console[4]]  # На случай, если вместо ФИ будет только Ф
         insert_excel(dataList)
-        messagebox.showinfo("Добавление", "Ваши данные добавлены")
     elif console[0].upper() == 'DELETE':
         messagebox.showinfo("Удаление", f"Данные из строки {console[1] + 1} удалены")
         delete_rows(console[1] + 1)  # 1 - это строка с названиями(+1 - чтобы не удалили случайно строку с )
+    elif console[0].upper() == 'REMOVE':
+        if console[1] == "student":
+            remove_database()
+            messagebox.showinfo("Удаление базы данных", "База данных 'student' удалена успешно")
+        else:
+            remove_backup()
+            messagebox.showinfo("Удаление backup-файла", "Backup-файл удалён успешно")
     elif console[0].upper() == 'CLEAR':
         clean_database()
         messagebox.showinfo("Очистка", "База данных очищена")
