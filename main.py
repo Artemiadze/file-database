@@ -45,19 +45,6 @@ def commit_commands():
 
 
 if __name__ == '__main__':
-    """
-    create_empty_excel(columns=['ID', 'Name', 'Email', 'Group'], filename='student.xlsx')
-    
-    insert_excel([1, 'Vlasov Artyom', 'av@yandex.ru', '23CST2'])
-    insert_excel([2, 'Igor Kim', 'i@yandex.ru', '23CST4'])
-    insert_excel([3, 'Pedro Pascal', 'p@yandex.ru', '23CST10'])
-    insert_excel([3, 'Pedro Pascal', 'p@yandex.ru', '23CST10'])  # - выведет, что уже есть такой элемент с таким id
-    insert_excel([4, 'Arthur Morgan', 'a@yandex.ru', '23CST9'])
-    
-    get_data_to_ecxel("a@yandex.ru")  # печать строки по ключу
-    get_data_to_ecxel("23CST10", "Name")  # печать элемента по ключу
-    """
-
     window = Tk()  # Создаём окно приложения.
     window.title("SQL CONSOLE")  # Работа с БД
     window.geometry('700x200')
